@@ -29,24 +29,21 @@ Algorithm:
 ```js
 const findTwoMissingNumbersLinear = (arr = []) => {
   const missing = [];
-  const lastNumber = arr.length + 2;
+  let expected = 1;
 
-  if (arr[0] !== 1) missing.push(1);
-  if (arr.at(-1) !== lastNumber) missing.push(lastNumber);
+  for (const num of arr) {
+    while (expected < num) {
+      missing.push(expected);
 
-  if (missing.length === 2) return missing;
+      if (missing.length === 2) return missing;
 
-  for (let i = 0; i < arr.length; i++) {
-    if (missing.length === 2) break;
-
-    if (arr[i] + 1 !== arr[i + 1] && arr[i + 1]) {
-      missing.push(arr[i] + 1);
+      expected++;
     }
 
-    if (arr[i] + 2 !== arr[i + 2] && arr[i + 2]) {
-      missing.push(arr[i] + 2);
-    }
+    expected++;
   }
+
+  while (missing.length < 2) missing.push(expected++);
 
   return missing;
 };
